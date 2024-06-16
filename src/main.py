@@ -7,13 +7,14 @@ from pydantic import BaseModel
 
 
 class Instance(BaseModel):
-    cylinders: int
-    displacement: float
-    horsepower: float
-    weight: float
-    acceleration: float
-    model_year: int
-    origin: int
+    culmen_length_mm: float
+    culmen_depth_mm: float
+    flipper_length_mm: float
+    body_mass_g: float
+    sex: int
+    island_Biscoe: int
+    island_Dream: int
+    island_Torgersen: int
 
 
 app = FastAPI()
@@ -45,5 +46,5 @@ def healthcheck() -> dict[str, str]:
 
 @app.post("/predictions")
 async def predictions(instance: Instance,
-                      token: str = Depends(check_token)) -> dict[str, float]:
+                      token: str = Depends(check_token)) -> dict[str, str]:
     return make_inference(load_model(model_path), instance.dict())
